@@ -17,9 +17,9 @@
   html {
     box-sizing: border-box;
   }
-  
-  *, *:before, *:after { 
-    box-sizing: inherit; 
+
+  *, *:before, *:after {
+    box-sizing: inherit;
   }
 
   div {
@@ -41,7 +41,30 @@
 </style>
 
 <button></button>
+
 <script>
+
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    e.stopPropagation(); //stop bubbling, will no longer trigger events on the parents
+    // console.log(this);
+  }
+
+  // document.body.addEventListener('click', logText);
+
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true //will listen for a click then unbind itself, like a div.removeEventListener('click', logText)
+  }));
+
+  button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    once: true //so no one can click on the button more than one
+  })
 
 </script>
 </body>
